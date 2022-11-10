@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ContactsRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ContactsRepository::class)]
@@ -25,11 +26,19 @@ class Contacts
     #[ORM\Column(length: 255)]
     private ?string $telephone = null;
 
-    #[ORM\Column]
-    private ?int $contact_area_id = null;
-
     #[ORM\Column(length: 255)]
     private ?string $message = null;
+
+    #[ORM\Column(type: 'datetime')]
+    private DateTime $created_at;
+
+    #[ORM\ManyToOne(targetEntity: ContactTypes::class, inversedBy: 'contact_types')]
+    private $contactType;
+
+    public function __construct()
+    {
+        $this->created_at = new DateTime();
+    }
 
     public function getId(): ?int
     {
@@ -104,6 +113,30 @@ class Contacts
     public function setMessage(string $message): self
     {
         $this->message = $message;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?DateTime
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(DateTime $created_at): self
+    {
+        $this->message = $created_at;
+
+        return $this;
+    }
+
+    public function getContactType(): ?ContactTypes
+    {
+        return $this->contactType;
+    }
+
+    public function setContactType(?ContactTypes $contactType): self
+    {
+        $this->contactType = $contactType;
 
         return $this;
     }
