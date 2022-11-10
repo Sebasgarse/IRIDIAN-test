@@ -9,7 +9,7 @@
     }
 </style>
 
-<div class="contact-form__wrapper">
+<div class="contact-form__wrapper row">
 
     <div class='col-9'>
         <h1>Hello {{ controller_name }}! ✅</h1>
@@ -20,7 +20,17 @@
             <li>Your template at <code><a href="{{ '/home/sebastian/Documentos/Trabajo/IRIDIAN/Prueba/Symfony_form/templates/contact/index.html.twig'|file_link(0) }}">templates/contact/index.html.twig</a></code></li>
         </ul>
     </div>
-    <aside class='col-3'></aside>
+    <aside class='col-2'>
+        <h3>Contactanos</h3>
+        <hr />
+        <ul class='justify-content-start list-unstyled text-muted'>
+            <li>Email: <a href='mailto: Correo@contacto.com'>Correo@contacto.com</a></li>
+            <li>Telefono: 1234-1234567</li>
+            <li><br/></li>
+            <li>123 Calle Calle</li>
+            <li>Oficina oficina</li>
+        </ul>
+    </aside>
     
 </div>
 {% endblock %}
