@@ -7,3 +7,9 @@ export interface ContactInformation
     contact: string,
     message: string
 }
+
+export interface Contact 
+{
+    id: number,
+    name: string,
+}

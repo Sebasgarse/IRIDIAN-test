@@ -1,1 +1,69 @@
+<div class="d-flex justify-content-center flex-column align-items-start
+    form-contact">
+    <h1 class="text-muted my-5">Contacto</h1>
+    <address class="text-muted">
+        Correo:<br>
+        <a href="mailto: Correo@contacto.com">Correo@contacto.com</a><br>
+        Telefono: <br>
+        1234-1234567 <br>
+        <br>
+        Calle, Calle<br>
+        Pais Pais
+    </address>
 
+    <hr class="w-25" />
+
+    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+        <!-- Name -->
+        <div class="mb-3">
+            <label for="inputName" class="form-label">Nombre</label>
+            <input FormControlName="name" type="text"
+                class="form-control" id="inputName">
+        </div>
+        <div *ngIf="name?.invalid && (name?.dirty || name?.touched)"
+            class="alert alert-danger">
+            <div *ngIf="name?.errors?.['required']">
+                Tu nombre es requerido
+            </div>
+        </div>
+        <!-- Surname -->
+        <div class="mb-3">
+            <label for="inputSurname" class="form-label">Apellido</label>
+            <input [(ngModel)]="contactInformation.surname" type="text"
+                name="surname"
+                class="form-control" id="inputSurname">
+        </div>
+        <!-- Email -->
+        <div class="mb-3">
+            <label for="inputEmail" class="form-label">Correo electronico</label>
+            <input [(ngModel)]="contactInformation.email" type="email"
+                name="email"
+                class="form-control" id="inputEmail">
+        </div>
+        <!-- Telephone -->
+        <div class="mb-3">
+            <label for="inputTel" class="form-label">Telefono</label>
+            <input type="tel" class="form-control" name="tel"
+                [(ngModel)]="contactInformation.telephone"
+                id="inputTel">
+        </div>
+        <!-- Contact -->
+        <div class="mb-3">
+            <label for="contact" class="form-label">Area de Contacto</label>
+            <input type="tel" class="form-control" name="contact"
+                [(ngModel)]="contactInformation.contact"
+                id="inputTel">
+        </div>
+        <!-- Message -->
+        <div class="mb-3">
+            <label for="inputMessage" class="form-label">Mensaje</label>
+            <textarea class="form-control" FormControlName="message"
+                id="inputMessage">
+            </textarea>
+        </div>
+
+        <button type="submit" [disabled]="!contactForm.valid" class="btn
+            btn-primary">Mandar</button>
+    </form>
+
+</div>
