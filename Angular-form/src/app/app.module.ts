@@ -8,6 +8,7 @@ import { FormSuccessComponent } from './form-success/form-success.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormErrorComponent } from './form-error/form-error.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormContactComponent,
     FormSuccessComponent,
     FooterComponent,
-    HeaderComponent
+    HeaderComponent,
+    FormErrorComponent
   ],
   imports: [
     BrowserModule,

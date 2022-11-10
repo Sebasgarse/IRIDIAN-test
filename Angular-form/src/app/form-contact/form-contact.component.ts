@@ -39,8 +39,11 @@ export class FormContactComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.sendForm.send(this.contactForm.value as ContactInformation);
-    this.router.navigate(['success']);
+    this.sendForm.send(this.contactForm.value as ContactInformation).then(() => {
+      this.router.navigate(['success']);
+    }).catch(() => {
+      this.router.navigate(['error']);
+    });
   }
 
   get name() { return this.contactForm.get('name'); }

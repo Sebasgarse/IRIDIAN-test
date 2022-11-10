@@ -8,7 +8,9 @@ export class SendFormService {
 
   constructor() { }
 
-  send(contactInformation: ContactInformation) {
-    
+  send(contactInformation: ContactInformation): Promise<void> {
+  return new Promise((resolve) => {
+    resolve();
+  })  
   }
 }
