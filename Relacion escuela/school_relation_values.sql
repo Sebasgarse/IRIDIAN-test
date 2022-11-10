@@ -45,7 +45,6 @@ CREATE TABLE IF NOT EXISTS `answers`
     `title` VARCHAR(255) NOT NULL,
     `score` INT NOT NULL DEFAULT '0',
     `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `active` tinyint DEFAULT '1',
     FOREIGN KEY (`question_id`) 
         REFERENCES `questions`(`id`)
         ON DELETE CASCADE
