@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ContactInformation } from '../contact-information';
+import { Contact, ContactInformation } from '../contact-information';
 import { SendFormService } from './services/send-form.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { GetContactService } from './services/get-contact.service';
 
 @Component({
   selector: 'app-form-contact',
@@ -31,7 +32,7 @@ export class FormContactComponent implements OnInit {
     message: new FormControl(this.contactInformation.message, Validators.required)
   })
 
-  constructor(private router: Router, private sendForm: SendFormService) {}
+  constructor(private router: Router, private sendForm: SendFormService, private getContact: GetContactService) {}
 
   ngOnInit(): void {
 
@@ -53,5 +54,7 @@ export class FormContactComponent implements OnInit {
   get contact() { return this.contactForm.get('contact'); }
 
   get message() { return this.contactForm.get('message'); }
+
+  get contacts(): Contact[] { return this.getContact.get(); }
 
 }
