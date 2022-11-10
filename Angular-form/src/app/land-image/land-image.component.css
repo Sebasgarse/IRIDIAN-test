@@ -1,0 +1,5 @@
+.main-image {
+    background: linear-gradient(to right, rgb(33, 147, 176), rgb(109, 213, 237));
+    height: 50vh;
+    min-height: 20rem;
+}

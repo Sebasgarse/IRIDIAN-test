@@ -9,6 +9,7 @@ import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormErrorComponent } from './form-error/form-error.component';
+import { LandImageComponent } from './land-image/land-image.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { FormErrorComponent } from './form-error/form-error.component';
     FormSuccessComponent,
     FooterComponent,
     HeaderComponent,
-    FormErrorComponent
+    FormErrorComponent,
+    LandImageComponent
   ],
   imports: [
     BrowserModule,
