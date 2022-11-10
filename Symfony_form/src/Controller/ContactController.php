@@ -31,4 +31,16 @@ class ContactController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    #[Route('/success', name: 'app_contact_success')]
+    public function success(): Response
+    {
+        return $this->render('contact/success.html.twig');
+    }
+
+    #[Route('/error', name: 'app_contact_error')]
+    public function failure(): Response
+    {
+        return $this->render('contact/failure.html.twig');
+    }
 }

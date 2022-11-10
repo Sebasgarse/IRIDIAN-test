@@ -33,7 +33,7 @@ class ContactType extends AbstractType
                 'expanded' => true
             ])
             ->add('message', TextareaType::class)
-            ->add('save', SubmitType::class);
+            ->add('Enviar', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
