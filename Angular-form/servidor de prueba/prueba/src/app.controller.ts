@@ -1,11 +1,8 @@
 import { Controller, Get, Post } from '@nestjs/common';
-import { AppService } from './app.service';
 import { Contact } from './contact-information';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
-
   @Get()
   getHello(): string {
     return '/types to get types </br> /save to send the data';

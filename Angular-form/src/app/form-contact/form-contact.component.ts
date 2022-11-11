@@ -53,7 +53,7 @@ export class FormContactComponent implements OnInit {
     private sendForm: SendFormService,
     private getContact: GetContactService
   ) {
-    this.getContacts;
+    this.getContacts();
   }
 
   ngOnInit(): void {}
@@ -68,8 +68,9 @@ export class FormContactComponent implements OnInit {
       .then(() => {
         this.router.navigate(['success']);
       })
-      .catch(() => {
-        this.router.navigate(['error']);
+      .catch((error) => {
+        console.error(error);
+        // this.router.navigate(['error']);
       });
   }
 
