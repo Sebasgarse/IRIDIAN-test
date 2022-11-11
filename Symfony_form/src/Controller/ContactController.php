@@ -5,8 +5,9 @@ namespace App\Controller;
 use App\Entity\Contacts;
 use App\Entity\ContactTypes;
 use App\Form\Type\ContactType;
+use App\Service\ContactInfoTimeValidation;
+use App\Service\ContactTypesManager;
 use Doctrine\Persistence\ManagerRegistry;
-use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,25 +16,21 @@ use Symfony\Component\Routing\Annotation\Route;
 class ContactController extends AbstractController
 {
     #[Route('/', name: 'app_contact')]
-    public function index(ManagerRegistry $doctrine, Request $request): Response
-    {
+    public function index(
+        ManagerRegistry $doctrine,
+        Request $request,
+        ContactTypesManager $contactTypesManager,
+        ContactInfoTimeValidation $contactInfoTimeValidation
+    ): Response {
         $entityManager = $doctrine->getManager();
-        $ar = ['Linkedin', 'Facebook', 'Referidos', 'Twitter', 'Otro'];
         $contact = new Contacts();
-        $contactTypes = $doctrine->getRepository(ContactTypes::class)->findAll();
-        if (empty($contactTypes)) {
-            foreach ($ar as $value) {
-                $contact_type = new ContactTypes();
-                $contact_type->setName($value);
-                $entityManager->persist($contact_type);
-                $entityManager->flush();
-            }
-            $contactTypes = $doctrine->getRepository(ContactTypes::class)->findAll();
-        }
 
-        $form = $this->createForm(ContactType::class, $contact, ['types' => $contactTypes]);
+        $form = $this->createForm(ContactType::class, $contact, ['types' => $contactTypesManager->getTypes()]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($contactInfoTimeValidation->AlreadyDoneToday($form['email']->getData())) {
+                return $this->redirectToRoute('app_contact_already');
+            }
             $type = $doctrine->getRepository(ContactTypes::class)->find($form['contact_type_id']->getData());
             $contact->setContactType($type);
             $entityManager->persist($contact);
@@ -58,5 +55,11 @@ class ContactController extends AbstractController
     public function failure(): Response
     {
         return $this->render('contact/failure.html.twig');
+    }
+
+    #[Route('/already', name: 'app_contact_already')]
+    public function already(): Response
+    {
+        return $this->render('contact/already.html.twig');
     }
 }
