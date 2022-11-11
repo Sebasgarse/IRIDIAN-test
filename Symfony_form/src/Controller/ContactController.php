@@ -3,15 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Contacts;
-use App\Entity\ContactTypes;
 use App\Form\Type\ContactType;
-use App\Service\ContactInfoTimeValidation;
 use App\Service\ContactTypesManager;
 use App\Service\HandleSubmittedData;
-use Doctrine\Persistence\ManagerRegistry;
-use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -20,16 +15,12 @@ class ContactController extends AbstractController
     #[Route('/', name: 'app_contact')]
     public function index(
         HandleSubmittedData $handleSubmittedData,
-        ContactTypesManager $contactTypesManager,
-        ContactInfoTimeValidation $contactInfoTimeValidation,
-        LoggerInterface $logger
-
+        ContactTypesManager $contactTypesManager
     ): Response {
         $contact = new Contacts();
 
         $form = $this->createForm(ContactType::class, $contact, ['types' => $contactTypesManager->getTypes()]);
 
-        // $logger->info(json_encode(empty($contactInfoTimeValidation->AlreadyDoneToday('assdsd@sa.com'))));
         $result = $handleSubmittedData->handle($form, $contact);
 
 

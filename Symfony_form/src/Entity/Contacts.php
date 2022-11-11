@@ -5,8 +5,6 @@ namespace App\Entity;
 use App\Repository\ContactsRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Mapping\ClassMetadata;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[ORM\Entity(repositoryClass: ContactsRepository::class)]
 class Contacts
