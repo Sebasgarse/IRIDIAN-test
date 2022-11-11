@@ -23,16 +23,29 @@ class ContactType extends AbstractType
         foreach ($options['types'] as $value) {
             $list[$value->getName()] = $value->getId();
         }
+
         $builder
-            ->add('name', TextType::class)
-            ->add('surname', TextType::class)
-            ->add('email', EmailType::class)
-            ->add('telephone', TelType::class)
-            ->add('contact_type', ChoiceType::class, [
-                'choices' => $list,
-                'expanded' => true
+            ->add('name', TextType::class, [
+                'label' => 'Nombre',
             ])
-            ->add('message', TextareaType::class)
+            ->add('surname', TextType::class, [
+                'label' => 'Apellido',
+            ])
+            ->add('email', EmailType::class, [
+                'label' => 'Email',
+            ])
+            ->add('telephone', TelType::class, [
+                'label' => 'Teléfono',
+            ])
+            ->add('contact_type_id', ChoiceType::class, [
+                'choices' => $list,
+                'expanded' => true,
+                'mapped' => false,
+                'label' => '¿Cómo nos conocío?',
+            ])
+            ->add('message', TextareaType::class, [
+                'label' => 'Mensaje',
+            ])
             ->add('Enviar', SubmitType::class);
     }
 
@@ -41,6 +54,7 @@ class ContactType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Contacts::class,
             'types' => [],
+            'allow_extra_fields' => true
         ]);
         $resolver->setAllowedTypes('types', 'array');
     }

@@ -93,18 +93,6 @@ class Contacts
         return $this;
     }
 
-    public function getContactAreaId(): ?string
-    {
-        return $this->contact_area_id;
-    }
-
-    public function setContactAreaId(string $contact_area_id): self
-    {
-        $this->contact_area_id = $contact_area_id;
-
-        return $this;
-    }
-
     public function getMessage(): ?string
     {
         return $this->message;
