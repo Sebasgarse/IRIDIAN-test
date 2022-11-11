@@ -1,20 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Contact } from 'src/app/contact-information';
+import axios from 'axios';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GetContactService {
+  constructor() {}
 
-  constructor() { }
-
-  get(): Contact[] {
-    return [
-      {id: 1, name: 'linkedin'},
-      {id: 2, name: 'Facebook'},
-      {id: 3, name: 'Amigo'},
-      {id: 4, name: 'Familiar'},
-      {id: 5, name: 'Twitter'},
-    ];
+  async get(): Promise<Contact[]> {
+    const resp = await axios.get<Contact[]>('http://localhost:3000/types');
+    return resp.data;
   }
 }
