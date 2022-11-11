@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ContactController extends AbstractController
 {
     #[Route('/', name: 'app_contact')]
-    public function index(ManagerRegistry $doctrine, Request $request, LoggerInterface $logger): Response
+    public function index(ManagerRegistry $doctrine, Request $request): Response
     {
         $entityManager = $doctrine->getManager();
         $ar = ['Linkedin', 'Facebook', 'Referidos', 'Twitter', 'Otro'];
@@ -28,6 +28,7 @@ class ContactController extends AbstractController
                 $entityManager->persist($contact_type);
                 $entityManager->flush();
             }
+            $contactTypes = $doctrine->getRepository(ContactTypes::class)->findAll();
         }
 
         $form = $this->createForm(ContactType::class, $contact, ['types' => $contactTypes]);

@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\ContactsRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[ORM\Entity(repositoryClass: ContactsRepository::class)]
 class Contacts
@@ -32,12 +34,23 @@ class Contacts
     #[ORM\Column(type: 'datetime')]
     private DateTime $created_at;
 
-    #[ORM\ManyToOne(targetEntity: ContactTypes::class, inversedBy: 'contact_types')]
-    private $contactType;
+    #[ORM\ManyToOne(targetEntity: ContactTypes::class, inversedBy: 'contacts')]
+    private $contact_type;
 
     public function __construct()
     {
         $this->created_at = new DateTime();
+    }
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $not_blank = new NotBlank();
+        $not_blank->message = 'No puede estar vacía';
+        $metadata->addPropertyConstraint('name', $not_blank);
+        $metadata->addPropertyConstraint('surname', $not_blank);
+        $metadata->addPropertyConstraint('email', $not_blank);
+        $metadata->addPropertyConstraint('telephone', $not_blank);
+        $metadata->addPropertyConstraint('message', $not_blank);
     }
 
     public function getId(): ?int
