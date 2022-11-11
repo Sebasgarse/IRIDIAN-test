@@ -30,9 +30,18 @@ symfony server:start
 
 ## Angular-form
 
+### Angular
+
 ```
 cd Angular-form
 ng serve
+```
+
+### Servidor de prueba
+
+```
 cd 'Angular-form/servidor de prueba/prueba'
 npm run start:dev
 ```
+
+Angular requiere el servidor de prueba para funcionar
