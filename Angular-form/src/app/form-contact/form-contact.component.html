@@ -1,8 +1,136 @@
 <app-land-image></app-land-image>
 <div class="d-flex justify-content-center flex-column align-items-start
     form-contact">
-    <h1 class="text-muted my-5">Contacto</h1>
+    <h1 class="text-muted text-center my-5 align-self-center">Contacto</h1>
+    <form class="mx-auto" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+
+            <!-- Name -->
+            <div class="col-6">
+                <div>
+                    <label for="inputName" class="form-label">Nombre</label>
+                    <input formControlName="name" type="text" name="name"
+                        class="form-control" id="inputName">
+                </div>
+                <div *ngIf="name?.invalid && (name?.dirty || name?.touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="name?.errors?.['required']">
+                        Tu nombre es requerido
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Surname -->
+            <div class="col-6">
+                <div>
+                    <label for="inputSurname" class="form-label">Apellido</label>
+                    <input type="text"
+                        formControlName="surname"
+                        class="form-control" id="inputSurname">
+                </div>
+                <div *ngIf="surname?.invalid && (surname?.dirty ||
+                    surname?.touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="surname?.errors?.['required']">
+                        Tu apellido es requerido
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <!-- Email -->
+            <div class="col-6">
+                <div>
+                    <label for="inputEmail" class="form-label">Correo
+                        electronico</label>
+                    <input type="email"
+                        formControlName="email"
+                        class="form-control" id="inputEmail">
+                </div>
+                <div *ngIf="email?.invalid && (email?.dirty || email?.touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="email?.errors?.['required']">
+                        Tu correo es requerido
+                    </div>
+                    <div *ngIf="email?.errors?.['email']">
+                        Debe ser un correo valido
+                    </div>
+                </div>
+            </div>
+
+            <!-- Telephone -->
+            <div class="col-6">
+                <div>
+                    <label for="inputTel" class="form-label">Teléfono</label>
+                    <input type="tel" class="form-control"
+                        formControlName="telephone"
+                        id="inputTel">
+                </div>
+                <div *ngIf="telephone?.invalid && (telephone?.dirty ||
+                    telephone?.touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="telephone?.errors?.['required']">
+                        Tu teléfono es requerido
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row my-3">
+            <!-- Message -->
+            <div class="col">
+                <div>
+                    <label for="inputMessage" class="form-label">Mensaje</label>
+                    <textarea class="form-control" formControlName="message"
+                        id="inputMessage">
+                    </textarea>
+                </div>
+                <div *ngIf="message?.invalid && (message?.dirty ||
+                    message?.touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="message?.errors?.['required']">
+                        El mensaje es requerido
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact -->
+        <div class="mb-3">
+            <strong>¿Cómo nos conocistes?</strong>
+            <div class="form-check" *ngFor="let contact_ of contacts; index as
+                i; first as
+                isFirst">
+                <input type="radio" class="form-check-input" name="contact"
+                    [value]="contact_.id"
+                    formControlName="contact"
+                    (click)="onClickRadio(contact_.id)"
+                    id="inputRadio-{{contact_.id}}" />
+                <label for="inputRadio-{{contact_.id}}"
+                    class="form-check-label">
+                    {{ contact_.name }}
+                </label>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="offset-4 col-4">
+                <button type="submit" class="btn
+                    btn-primary w-100" [disabled]="!contactForm.valid">
+                    Enviar
+                </button>
+            </div>
+        </div>
+
+    </form>
+
+    <hr class="w-25 mt-5" />
+
     <address class="text-muted">
+        <strong>Tambien puedes contactarnos por</strong> <br>
         Correo:<br>
         <a href="mailto: Correo@contacto.com">Correo@contacto.com</a><br>
         Telefono: <br>
@@ -11,93 +139,5 @@
         Calle, Calle<br>
         Pais Pais
     </address>
-
-    <hr class="w-25" />
-
-    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
-        <!-- Name -->
-        <div class="mb-3">
-            <label for="inputName" class="form-label">Nombre</label>
-            <input formControlName="name" type="text" name="name"
-                class="form-control" id="inputName">
-        </div>
-        <div *ngIf="name?.invalid && (name?.dirty || name?.touched)"
-            class="alert alert-danger">
-            <div *ngIf="name?.errors?.['required']">
-                Tu nombre es requerido
-            </div>
-        </div>
-        <!-- Surname -->
-        <div class="mb-3">
-            <label for="inputSurname" class="form-label">Apellido</label>
-            <input type="text"
-                formControlName="surname"
-                class="form-control" id="inputSurname">
-        </div>
-        <div *ngIf="surname?.invalid && (surname?.dirty || surname?.touched)"
-            class="alert alert-danger">
-            <div *ngIf="surname?.errors?.['required']">
-                Tu apellido es requerido
-            </div>
-        </div>
-        <!-- Email -->
-        <div class="mb-3">
-            <label for="inputEmail" class="form-label">Correo electronico</label>
-            <input type="email"
-                formControlName="email"
-                class="form-control" id="inputEmail">
-        </div>
-        <div *ngIf="email?.invalid && (email?.dirty || email?.touched)"
-            class="alert alert-danger">
-            <div *ngIf="email?.errors?.['required']">
-                Tu email es requerido
-            </div>
-        </div>
-        <!-- Telephone -->
-        <div class="mb-3">
-            <label for="inputTel" class="form-label">Telefono</label>
-            <input type="tel" class="form-control" formControlName="telephone"
-                id="inputTel">
-        </div>
-        <div *ngIf="telephone?.invalid && (telephone?.dirty ||
-            telephone?.touched)"
-            class="alert alert-danger">
-            <div *ngIf="telephone?.errors?.['required']">
-                Tu telefono es requerido
-            </div>
-        </div>
-        <!-- Contact -->
-        <div class="mb-3">
-            ¿Cómo nos conocistes?
-            <div class="form-check" *ngFor="let contact_ of contacts; index as
-                i; first as
-                isFirst">
-                <input type="radio" class="form-check-input" name="contact"
-                    value={{contact_.name}}
-                    formControlName="contact"
-                    id="inputRadio-{{contact_.id}}" />
-                <label for="inputRadio-{{contact_.id}}"
-                    class="form-check-label">
-                    {{ contact_.name }}
-                </label>
-            </div>
-        </div>
-        <!-- Message -->
-        <div class="mb-3">
-            <label for="inputMessage" class="form-label">Mensaje</label>
-            <textarea class="form-control" formControlName="message"
-                id="inputMessage">
-            </textarea>
-        </div>
-        <div *ngIf="message?.invalid && (message?.dirty || message?.touched)"
-            class="alert alert-danger">
-            <div *ngIf="message?.errors?.['required']">
-                El mensaje es requerido
-            </div>
-        </div>
-
-        <button type="submit" class="btn
-            btn-primary" [disabled]="!contactForm.valid">Mandar</button>
-    </form>
 
 </div>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Contact, ContactInformation } from '../contact-information';
 import { SendFormService } from './services/send-form.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { GetContactService } from './services/get-contact.service';
 
 @Component({
@@ -17,7 +17,7 @@ export class FormContactComponent implements OnInit {
     surname: '',
     email: '',
     telephone: '',
-    contact: '',
+    contact: 0,
     message: ''
   }
 
@@ -38,6 +38,10 @@ export class FormContactComponent implements OnInit {
 
   }
 
+  onClickRadio(id: number): void {
+    this.contact?.setValue(id);
+  }
+
   onSubmit(): void {
     this.sendForm.send(this.contactForm.value as ContactInformation).then(() => {
       this.router.navigate(['success']);
@@ -46,17 +50,17 @@ export class FormContactComponent implements OnInit {
     });
   }
 
-  get name() { return this.contactForm.get('name'); }
+  get name(): AbstractControl<string | null, string | null> | null { return this.contactForm.get('name'); }
 
-  get surname() { return this.contactForm.get('surname'); }
+  get surname(): AbstractControl<string | null, string | null> | null { return this.contactForm.get('surname'); }
 
-  get email() { return this.contactForm.get('email'); }
+  get email(): AbstractControl<string | null, string | null> | null { return this.contactForm.get('email'); }
 
-  get telephone() { return this.contactForm.get('telephone'); }
+  get telephone(): AbstractControl<string | null, string | null> | null { return this.contactForm.get('telephone'); }
 
-  get contact() { return this.contactForm.get('contact'); }
+  get contact(): AbstractControl<number | null, number | null> | null { return this.contactForm.get('contact'); }
 
-  get message() { return this.contactForm.get('message'); }
+  get message(): AbstractControl<string | null, string | null> | null { return this.contactForm.get('message'); }
 
   get contacts(): Contact[] { return this.getContact.get(); }
 

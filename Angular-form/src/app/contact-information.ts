@@ -4,7 +4,7 @@ export interface ContactInformation
     surname: string,
     email: string,
     telephone: string,
-    contact: string,
+    contact: number,
     message: string
 }
 
