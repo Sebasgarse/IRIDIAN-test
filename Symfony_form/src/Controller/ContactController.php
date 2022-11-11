@@ -7,7 +7,9 @@ use App\Entity\ContactTypes;
 use App\Form\Type\ContactType;
 use App\Service\ContactInfoTimeValidation;
 use App\Service\ContactTypesManager;
+use App\Service\HandleSubmittedData;
 use Doctrine\Persistence\ManagerRegistry;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,28 +19,27 @@ class ContactController extends AbstractController
 {
     #[Route('/', name: 'app_contact')]
     public function index(
-        ManagerRegistry $doctrine,
-        Request $request,
+        HandleSubmittedData $handleSubmittedData,
         ContactTypesManager $contactTypesManager,
-        ContactInfoTimeValidation $contactInfoTimeValidation
+        ContactInfoTimeValidation $contactInfoTimeValidation,
+        LoggerInterface $logger
+
     ): Response {
-        $entityManager = $doctrine->getManager();
         $contact = new Contacts();
 
         $form = $this->createForm(ContactType::class, $contact, ['types' => $contactTypesManager->getTypes()]);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            if ($contactInfoTimeValidation->AlreadyDoneToday($form['email']->getData())) {
-                return $this->redirectToRoute('app_contact_already');
-            }
-            $type = $doctrine->getRepository(ContactTypes::class)->find($form['contact_type_id']->getData());
-            $contact->setContactType($type);
-            $entityManager->persist($contact);
-            $entityManager->flush();
 
-            return $this->redirectToRoute('app_contact_success');
+        // $logger->info(json_encode(empty($contactInfoTimeValidation->AlreadyDoneToday('assdsd@sa.com'))));
+        $result = $handleSubmittedData->handle($form, $contact);
+
+
+        if ($result == $handleSubmittedData->ALREADY) {
+            return $this->redirectToRoute('app_contact_already');
         }
 
+        if ($result == $handleSubmittedData->SUCCESS) {
+            return $this->redirectToRoute('app_contact_success');
+        }
 
         return $this->renderForm('contact/index.html.twig', [
             'form' => $form,

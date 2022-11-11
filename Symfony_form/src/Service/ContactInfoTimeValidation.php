@@ -13,15 +13,15 @@ class ContactInfoTimeValidation
         $this->contacts = $contacts;
     }
 
-    public function AlreadyDoneToday(string $email): bool
+    public function AlreadyDoneToday(string $email)
     {
         $contacts = $this->contacts->getLast($email);
-        if (!empty($contacts)) {
-            return true;
+        if (empty($contacts)) {
+            return false;
         }
         $contact = $contacts[0];
         $today = date('Y-m-d');
-        $last_time = date_format($contact->created_at, 'Y-m-d');
+        $last_time = date_format($contact->getCreatedAt(), 'Y-m-d');
         if ($today == $last_time) {
             return true;
         }

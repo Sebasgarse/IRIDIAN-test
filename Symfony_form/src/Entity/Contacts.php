@@ -42,17 +42,6 @@ class Contacts
         $this->created_at = new DateTime();
     }
 
-    public static function loadValidatorMetadata(ClassMetadata $metadata)
-    {
-        $not_blank = new NotBlank();
-        $not_blank->message = 'No puede estar vacía';
-        $metadata->addPropertyConstraint('name', $not_blank);
-        $metadata->addPropertyConstraint('surname', $not_blank);
-        $metadata->addPropertyConstraint('email', $not_blank);
-        $metadata->addPropertyConstraint('telephone', $not_blank);
-        $metadata->addPropertyConstraint('message', $not_blank);
-    }
-
     public function getId(): ?int
     {
         return $this->id;
