@@ -93,14 +93,14 @@ CREATE TABLE IF NOT EXISTS `student_answers`
 
 insert  into `student_answers`(`student_id`,`question_id`, `answer_id`) values 
 ('1', '1', '1'),
-('1', '2', '1'),
-('1', '3', '2'),
+('1', '2', '3'),
+('1', '3', '6'),
 ('2', '1', '1'),
-('2', '2', '2'),
-('2', '3', '1'),
+('2', '2', '4'),
+('2', '3', '5'),
 ('3', '1', '2'),
-('3', '2', '2'),
-('3', '3', '1');
+('3', '2', '4'),
+('3', '3', '5');
 
 insert  into `student_answers`(`student_id`,`question_id`, `answer`) values 
 ('1', '4', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec quis eleifend ligula. Etiam ornare pellentesque iaculis. Maecenas rutrum ultricies lectus, nec molestie turpis euismod semper.'),
